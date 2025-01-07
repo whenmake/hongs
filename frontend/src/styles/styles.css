@@ -1,0 +1,21 @@
+  .modal-content {
+    max-height: 80vh; /* 오버레이 최대 높이 설정 */
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    padding: 20px;
+    overflow-y: auto;
+  }
+  
+  /* Chapter Modal 스타일 */
+  .chapter-modal {
+    width: 35%; /* Chapter Modal의 너비 */
+    height: 20%; /* Chapter Modal의 높이 */
+  }
+  
+  /* Note Modal 스타일 */
+  .note-modal {
+    width: 80%; /* Note Modal의 너비 */
+    height: 80%; /* Note Modal의 높이 */
+  }
+  
