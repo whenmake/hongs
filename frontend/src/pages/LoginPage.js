@@ -42,7 +42,7 @@ const LoginPage = () => {
       const data = await response.json();
       const nickname = ''
       
-      console.log("닉네임 체크 결과:", data);  // 닉네임 체크 결과: {hasNickname: true, nickname: "홍길동"}
+      console.log("닉네임 체크 결과:", data.nickname);  // 닉네임 체크 결과: {hasNickname: true, nickname: "홍길동"}
 
       if (data.hasNickname) {
         setNickname(data.nickname); // 닉네임 저장
