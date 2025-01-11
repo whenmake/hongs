@@ -32,7 +32,7 @@ const LoginPage = () => {
   // 닉네임 확인
   const checkNickname = async (user) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/check-nickname?uid=${user.uid}`);
+      const response = await fetch(`https://hongs.onrender.com/api/check-nickname?uid=${user.uid}`);
       const data = await response.json();
 
       if (data.hasNickname) {

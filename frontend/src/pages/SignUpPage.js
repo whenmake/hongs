@@ -13,7 +13,7 @@ const SignupPage = () => {
   // 닉네임 중복 확인
   const checkNickname = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/check-nickname-duplicate", {
+      const response = await fetch("https://hongs.onrender.com/api/check-nickname-duplicate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nickname }),
@@ -35,7 +35,7 @@ const SignupPage = () => {
   
     try {
       const user = auth.currentUser; // Firebase에서 현재 로그인한 사용자 가져오기
-      await fetch("http://localhost:5000/api/signup", {
+      await fetch("https://hongs.onrender.com/api/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ uid: user.uid, nickname }),

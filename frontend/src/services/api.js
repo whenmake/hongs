@@ -17,7 +17,7 @@ export const fetchCompleted = async (nickname) => {
   }
 
   try {
-    const response = await axios.get(`http://localhost:5000/api/completed`, {
+    const response = await axios.get(`https://hongs.onrender.com/api/completed`, {
       params: { nickname },
     });
     console.log("fetchCompleted 응답:", response);
@@ -30,7 +30,7 @@ export const fetchCompleted = async (nickname) => {
 
 // 완독 표시하기 토글글
 export const toggleComplete = (index, status, nickname) =>
-  axios.post("http://localhost:5000/api/completed", { index, status, nickname }); // userId 포함 여부 확인
+  axios.post("https://hongs.onrender.com/api/completed", { index, status, nickname }); // userId 포함 여부 확인
 
 // 노트 가져오기 날짜 기준
 export const fetchNotes = (index) => {
@@ -38,11 +38,11 @@ export const fetchNotes = (index) => {
   if (index === undefined || index === null) {
     return Promise.reject(new Error("index 파라미터가 필요합니다."));
   }
-  return axios.get(`http://localhost:5000/api/notes?index=${index}`);
+  return axios.get(`https://hongs.onrender.com/api/notes?index=${index}`);
 };
 
 // 모든 노트 가져오기 (특정 날짜 기준)
-export const fetchAllNotes = (index) => axios.get(`http://localhost:5000/api/notes?index=${index}`);
+export const fetchAllNotes = (index) => axios.get(`https://hongs.onrender.com/api/notes?index=${index}`);
 
 // 노트 저장
 export const saveNote = (index, content, nickname) => {
@@ -51,17 +51,17 @@ export const saveNote = (index, content, nickname) => {
     return Promise.reject("Invalid data format");
   }
 
-  return axios.post("http://localhost:5000/api/notes/save", { index, content, nickname });
+  return axios.post("https://hongs.onrender.com/api/notes/save", { index, content, nickname });
 };
 
 // 노트 삭제
-export const deleteNote = (id) => axios.delete(`http://localhost:5000/api/notes/${id}`);
+export const deleteNote = (id) => axios.delete(`https://hongs.onrender.com/api/notes/${id}`);
 
 // 노트 좋아요 추가/취소
 // export const likeNote = (id, userId) => axios.post(`http://localhost:5000/api/notes/${id}/like`, { userId });
 // 노트 좋아요 추가/취소 API 요청
 export const likeNote = (id, like, nickname) => {
-  return axios.post(`http://localhost:5000/api/notes/${id}/like`, {
+  return axios.post(`https://hongs.onrender.com/api/notes/${id}/like`, {
     nickname,
     like,
   });
