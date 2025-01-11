@@ -9,7 +9,7 @@ export const checkNickname = async (uid) => {
   return axios.get(`/api/check-nickname?uid=${uid}`);
 };
 
-// 완독 가져오기기
+// 완독 가져오기
 // export const fetchCompleted = () => axios.get("http://localhost:5000/api/completed");
 export const fetchCompleted = async (nickname) => {
   if (!nickname) {

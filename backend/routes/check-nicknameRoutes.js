@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
     if (!user) {
       return res.status(404).json({ hasNickname: false });
     }
-
+    console.error("uid, 닉네임:", uid, user.nickname);
     res.status(200).json({ hasNickname: true, nickname: user.nickname });
   } catch (error) {
     console.error("닉네임 확인 중 오류 발생:", error);

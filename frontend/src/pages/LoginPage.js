@@ -34,11 +34,14 @@ const LoginPage = () => {
     try {
       const response = await fetch(`https://hongs.onrender.com/api/check-nickname?uid=${user.uid}`);
       const data = await response.json();
+      console.log("닉네임 체크 결과:", data);
 
       if (data.hasNickname) {
+        setNickname(response.data.nickname); // nickname 상태 저장
         // 닉네임이 있으면 메인페이지로 이동
         navigate("/main");
       } else {
+        console.error("닉네임이 설정되지 않았습니다.");
         // 닉네임이 없으면 회원가입 페이지로 이동
         navigate("/signup");
       }
