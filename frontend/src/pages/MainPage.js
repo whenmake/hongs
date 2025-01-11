@@ -39,7 +39,7 @@ const MainPage = () => {
     if (!nickname) {
       console.error("닉네임이 없습니다. 로그인 페이지로 이동합니다.");
       // 닉네임이 없을 경우 로그인 페이지로 리다이렉트
-      navigate("/login");
+      navigate("/");
     } else {
       console.log("받아온 닉네임:", nickname);
       loadCompletedData();
