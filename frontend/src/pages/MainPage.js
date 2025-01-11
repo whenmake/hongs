@@ -18,6 +18,7 @@ import {
 import bibleData from "../data/data.json"; // JSON 파일 경로
 // import { fetchCompleted } from './api'; // fetchCompleted 함수가 포함된 API 호출 파일
 import { useLocation } from "react-router-dom";
+import urlData from "../data/url.json"; // url.json import
 
 const MainPage = () => {
   const [completed, setCompleted] = useState(Array(322).fill(false));
@@ -33,7 +34,7 @@ const MainPage = () => {
   const [selectedValue, setSelectedValue] = useState(""); // 선택된 칸의 값
   const location = useLocation();
   const nickname = location.state?.nickname; // 로그인 페이지에서 전달받은 닉네임
-
+  const [videoUrl, setVideoUrl] = useState(""); // 선택된 영상 URL 상태
 
   useEffect(() => {
     if (!nickname) {
@@ -46,6 +47,16 @@ const MainPage = () => {
     }    
   }, [nickname]); // nickname 변경 시 완료 상태만 다시 로드
   
+  // 선택된 인덱스에 맞는 URL 설정
+  useEffect(() => {
+    if (selectedIndex !== null) {
+      const urlObject = urlData.find((item) => item.인덱스 === selectedIndex); // 인덱스에 해당하는 URL 찾기
+      if (urlObject) {
+        setVideoUrl(urlObject.url); // URL 상태 업데이트
+      }
+    }
+  }, [selectedIndex]); // selectedIndex 변경 시 실행
+
   const loadCompletedData = async () => {
     try {
       const completedData = await fetchCompleted(nickname); // 완료 상태만 불러오기
@@ -234,6 +245,15 @@ const MainPage = () => {
     }
   };
 
+  // 특정 인덱스에 해당하는 URL 열기
+  const openVideoUrl = (index) => {
+    const urlObject = urlData.find((item) => item.인덱스 === index); // 인덱스에 맞는 URL 찾기
+    if (urlObject) {
+      window.open(urlObject.url, "_blank"); // URL을 새 창에서 열기
+    } else {
+      console.error("해당 인덱스에 매칭되는 URL이 없습니다.");
+    }
+  };
 
   return (
     <div className="relative">
@@ -253,10 +273,10 @@ const MainPage = () => {
       {isOverlayOpen && selectedIndex !== null && (
         <Modal onClose={handleOverlayClose} className="chapter-modal">
           <div className="text-center">
-            <h2 className="text-xl font-bold mb-4">{selectedValue}</h2> {/* 선택된 값 표시 */}            
+            <h2 className="text-xl font-bold mb-4">{selectedValue}</h2> {/* 선택된 값 표시 */}                                    
             <button
               className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mr-2"
-              onClick={() => window.open("https://youtu.be/obvBe-eO498?si=avDEdaDWZNaDCYOG", "_blank")}
+              onClick={() => openVideoUrl(selectedIndex)} // 챕터 클릭 시 인덱스 설정
             >
               통독 영상
             </button>
