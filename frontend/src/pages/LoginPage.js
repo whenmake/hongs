@@ -40,11 +40,12 @@ const LoginPage = () => {
     try {
       const response = await fetch(`https://hongs.onrender.com/api/check-nickname?uid=${user.uid}`);
       const data = await response.json();
+      
       console.log("닉네임 체크 결과:", data);  // 닉네임 체크 결과: {hasNickname: true, nickname: "홍길동"}
 
       if (data.hasNickname) {
         setNickname(data.nickname); // 닉네임 저장
-        nickname = data.nickname
+        const nickname = data.nickname
         console.log("닉네임 저장:", nickname);  // 닉네임 체크 결과: {hasNickname: true, nickname: "홍길동"}
         return true;
       }
