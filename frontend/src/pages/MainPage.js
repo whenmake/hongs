@@ -16,7 +16,7 @@ import {
   deleteNote,
 } from "../services/api";
 import bibleData from "../data/data.json"; // JSON 파일 경로
-import { fetchCompleted } from './api'; // fetchCompleted 함수가 포함된 API 호출 파일
+// import { fetchCompleted } from './api'; // fetchCompleted 함수가 포함된 API 호출 파일
 
 const MainPage = () => {
   const [completed, setCompleted] = useState(Array(322).fill(false));
