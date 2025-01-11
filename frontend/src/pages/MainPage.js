@@ -227,7 +227,7 @@ const MainPage = () => {
     try {
       await signOut(auth);
       alert("로그아웃 성공!");
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       console.error("로그아웃 실패:", error);
       alert("로그아웃 실패");
