@@ -45,7 +45,7 @@ const LoginPage = () => {
         // 닉네임이 있으면 메인페이지로 이동
         navigate("/main");
       } else {
-        console.error("닉네임이 설정되지 않았습니다.");
+        console.log("닉네임이 설정되지 않았습니다.");
         // 닉네임이 없으면 회원가입 페이지로 이동
         navigate("/signup");
       }

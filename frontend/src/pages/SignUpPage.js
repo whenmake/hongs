@@ -34,19 +34,53 @@ const SignupPage = () => {
     }
   
     try {
-      const user = auth.currentUser; // Firebase에서 현재 로그인한 사용자 가져오기
-      await fetch("https://hongs.onrender.com/api/signup", {
+      const currentUser = auth.currentUser; // 현재 사용자 가져오기
+
+      if (!currentUser) {
+        console.error("사용자가 인증되지 않았습니다.");
+        alert("로그인 후 회원가입을 진행해주세요.");
+        return;
+      }
+
+      const uid = currentUser.uid; // 사용자 uid 가져오기
+      const response = await fetch("https://hongs.onrender.com/api/signup", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ uid: user.uid, nickname }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          uid,
+          nickname,
+        }),
       });
-  
-      // 회원가입 후 메인 페이지로 이동
+
+      if (!response.ok) {
+        throw new Error("회원가입 요청 실패");
+      }
+
+      const data = await response.json();
+      console.log("회원가입 성공:", data);
+
+      alert("회원가입이 완료되었습니다!");
       navigate("/main");
     } catch (error) {
       console.error("회원가입 실패:", error);
+      alert("회원가입 중 오류가 발생했습니다. 다시 시도해주세요.");
     }
   };
+  //     const user = auth.currentUser; // Firebase에서 현재 로그인한 사용자 가져오기
+  //     await fetch("https://hongs.onrender.com/api/signup", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ uid: user.uid, nickname }),
+  //     });
+  
+  //     // 회원가입 후 메인 페이지로 이동
+  //     navigate("/main");
+  //   } catch (error) {
+  //     console.error("회원가입 실패:", error);
+  //   }
+  // };
   
   
 
