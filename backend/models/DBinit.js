@@ -27,7 +27,7 @@ const seedDatabase = async () => {
                 index: 0,
                 content: "기본 노트 내용",
                 nickname: "sampleNickname",
-                createdAt: Date.now, // 노트 작성 시간 필드 추가
+                createdAt: Date.now(), // 노트 작성 시간 필드 추가
                 likes: 0 ,
                 likedBy: [] , // 좋아요를 누른 사용자 ID 목록
             });
