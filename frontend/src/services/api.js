@@ -20,7 +20,7 @@ export const fetchCompleted = async (nickname) => {
     const response = await axios.get(`https://hongs.onrender.com/api/completed`, {
       params: { nickname },
     });
-    console.log("fetchCompleted 응답:", response);
+    console.log("fetchCompleted 응답:", response.data);
     return response;
   } catch (error) {
     console.error("fetchCompleted 실패:", error);

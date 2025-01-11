@@ -17,6 +17,7 @@ import {
 } from "../services/api";
 import bibleData from "../data/data.json"; // JSON 파일 경로
 // import { fetchCompleted } from './api'; // fetchCompleted 함수가 포함된 API 호출 파일
+import { useLocation } from "react-router-dom";
 
 const MainPage = () => {
   const [completed, setCompleted] = useState(Array(322).fill(false));
@@ -28,35 +29,43 @@ const MainPage = () => {
   const [allNotes, setAllNotes] = useState([]);
   const navigate = useNavigate();
   const auth = getAuth();
-  const nickname = localStorage.getItem("nickname");
+  // const nickname = localStorage.getItem("nickname");
   const [selectedValue, setSelectedValue] = useState(""); // 선택된 칸의 값
+  const location = useLocation();
+  const nickname = location.state?.nickname; // 로그인 페이지에서 전달받은 닉네임
 
 
   useEffect(() => {
-    const loadCompletedData = async () => {
-      try {
-        const completedData = await fetchCompleted(nickname); // 완료 상태만 불러오기
-        console.log("불러온 completedData:", completedData.data); // 디버깅용 로그
-        const completedArray = Array(322).fill(false);
-  
-        if (completedData.data && completedData.data.length > 0) {
-          completedData.data.forEach((item) => {
-            if (item.index !== undefined && item.status === true) {
-              completedArray[item.index] = true; // 완료 상태 true로 설정
-            }
-          });
-        }
-  
-        console.log("불러온 completedArray:", completedArray); // 디버깅용 로그
-        setCompleted(completedArray); // 완료 상태 업데이트
-      } catch (error) {
-        console.error("완독 상태 로드 실패:", error);
-      }
-    };
-  
-    loadCompletedData(); // 완료 상태만 초기 로드
+    if (!nickname) {
+      console.error("닉네임이 없습니다. 로그인 페이지로 이동합니다.");
+      // 닉네임이 없을 경우 로그인 페이지로 리다이렉트
+      navigate("/login");
+    } else {
+      console.log("받아온 닉네임:", nickname);
+      loadCompletedData();
+    }    
   }, [nickname]); // nickname 변경 시 완료 상태만 다시 로드
   
+  const loadCompletedData = async () => {
+    try {
+      const completedData = await fetchCompleted(nickname); // 완료 상태만 불러오기
+      console.log("불러온 completedData:", completedData.data); // 디버깅용 로그
+      const completedArray = Array(322).fill(false);
+
+      if (completedData.data && completedData.data.length > 0) {
+        completedData.data.forEach((item) => {
+          if (item.index !== undefined && item.status === true) {
+            completedArray[item.index] = true; // 완료 상태 true로 설정
+          }
+        });
+      }
+
+      console.log("불러온 completedArray:", completedArray); // 디버깅용 로그
+      setCompleted(completedArray); // 완료 상태 업데이트
+    } catch (error) {
+      console.error("완독 상태 로드 실패:", error);
+    }
+  };
 
   const handleCompleteToggle = async () => {
       if (selectedIndex === null) return;
@@ -228,7 +237,10 @@ const MainPage = () => {
 
   return (
     <div className="relative">
-      <div className="absolute top-4 right-4">
+      <div className="absolute top-4 right-4 flex items-center space-x-4">
+      {/* 닉네임 */}
+      <p className="text-lg font-medium text-white ">{nickname}</p>
+      {/* 로그아웃 버튼 */}
         <button
           onClick={handleLogout}
           className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"

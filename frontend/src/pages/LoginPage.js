@@ -14,8 +14,12 @@ const LoginPage = () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-      console.log("Google 로그인 성공:", user);
-      checkNickname(user); // 닉네임 확인
+      const hasNickname = await checkNickname(user);      
+      if (hasNickname) {
+        navigate("/main", { state: { nickname } }); // 메인 페이지로 닉네임 전달
+      } else {
+        navigate("/signup"); // 닉네임이 없는 경우 회원가입 페이지로 이동
+      }
     } catch (error) {
       console.error("Google 로그인 실패:", error);
     }
@@ -36,21 +40,16 @@ const LoginPage = () => {
     try {
       const response = await fetch(`https://hongs.onrender.com/api/check-nickname?uid=${user.uid}`);
       const data = await response.json();
-      console.log("닉네임 체크 결과:", data);
+      console.log("닉네임 체크 결과:", data);  // 닉네임 체크 결과: {hasNickname: true, nickname: "홍길동"}
 
       if (data.hasNickname) {
-        // setNickname(response.data.nickname); // nickname 상태 저장
-        setNickname(data.nickname);
-
-        // 닉네임이 있으면 메인페이지로 이동
-        navigate("/main");
-      } else {
-        console.log("닉네임이 설정되지 않았습니다.");
-        // 닉네임이 없으면 회원가입 페이지로 이동
-        navigate("/signup");
+        setNickname(data.nickname); // 닉네임 저장
+        return true;
       }
+      return false;
     } catch (error) {
       console.error("닉네임 확인 실패:", error);
+      return false;
     }
   };
 
