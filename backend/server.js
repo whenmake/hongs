@@ -12,10 +12,6 @@ const signupRoutes = require("./routes/signupRoutes");
 const app = express();
 const seedDatabase = require("./models/DBinit");
 
-connectDB().then(() => {
-
-});
-
 // 환경 변수에서 MongoDB URI 가져오기
 // const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/test';
 // const mongoURI = 'mongodb+srv://<username>:<password>@cluster0.mongodb.net/<databaseName>?retryWrites=true&w=majority';
