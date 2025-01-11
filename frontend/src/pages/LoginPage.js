@@ -14,8 +14,8 @@ const LoginPage = () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-      const hasNickname = await checkNickname(user);      
-      if (hasNickname) {
+      const nickname = await checkNickname(user);      
+      if (nickname) {
         navigate("/main", { state: { nickname } }); // 메인 페이지로 닉네임 전달
       } else {
         navigate("/signup"); // 닉네임이 없는 경우 회원가입 페이지로 이동
@@ -40,15 +40,14 @@ const LoginPage = () => {
     try {
       const response = await fetch(`https://hongs.onrender.com/api/check-nickname?uid=${user.uid}`);
       const data = await response.json();
-      const nickname = ''
+      // const nickname = ''
       
       console.log("닉네임 체크 결과:", data.nickname);  // 닉네임 체크 결과: {hasNickname: true, nickname: "홍길동"}
 
       if (data.hasNickname) {
         setNickname(data.nickname); // 닉네임 저장
-        nickname = data.nickname
         console.log("닉네임 저장:", nickname);  // 닉네임 체크 결과: {hasNickname: true, nickname: "홍길동"}
-        return true;
+        return data.nickname;
       }
       return false;
     } catch (error) {
